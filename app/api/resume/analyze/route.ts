@@ -3,14 +3,18 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { analyzeResume } from "@/lib/openai";
+import { aiRateLimiter } from "@/lib/middleware/rate-limiter";
 
 // Accepts multipart/form-data with a "file" field (PDF or plain text).
 export async function POST(req: Request) {
+  const rateLimitResponse = await aiRateLimiter(req);
+  if (rateLimitResponse) return rateLimitResponse;
+
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const userId = (session.user as any).id as string;
+  const userId = session.user.id;
 
   // Enforce free-tier resume analysis limit.
   const sub = await prisma.subscription.findUnique({ where: { userId } });
@@ -62,5 +66,36 @@ export async function POST(req: Request) {
   });
 
   return NextResponse.json({ resumeId: resume.id, ...result });
+}
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const userId = session.user.id;
+
+  const resumes = await prisma.resume.findMany({
+    where: { userId },
+    include: { analysis: true },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return NextResponse.json({
+    resumes: resumes.map((r) => ({
+      id: r.id,
+      fileName: r.fileName,
+      createdAt: r.createdAt,
+      analysis: r.analysis
+        ? {
+            score: r.analysis.score,
+            strengths: JSON.parse(r.analysis.strengths),
+            weaknesses: JSON.parse(r.analysis.weaknesses),
+            suggestions: JSON.parse(r.analysis.suggestions),
+            extractedSkills: JSON.parse(r.analysis.extractedSkills),
+          }
+        : null,
+    })),
+  });
 }
 

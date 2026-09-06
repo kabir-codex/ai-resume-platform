@@ -1,18 +1,17 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-
-const schema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(8),
-});
+import { validateRequest, registerSchema } from "@/lib/validation";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, password } = schema.parse(body);
+    const validation = validateRequest(registerSchema, body);
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
+    const { name, email, password } = validation.data;
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {

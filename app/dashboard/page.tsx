@@ -15,12 +15,12 @@ export default async function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8">Welcome back, {session.user?.name}</h1>
+      <h1 className="text-3xl font-bold mb-8 text-slate-900 dark:text-slate-50">Welcome back, {session.user?.name}</h1>
       <div className="grid md:grid-cols-3 gap-6">
         {cards.map((c) => (
-          <Link key={c.href} href={c.href} className="bg-white p-6 rounded-xl border hover:shadow-md transition">
-            <h3 className="font-bold text-lg mb-2">{c.title}</h3>
-            <p className="text-slate-600 text-sm">{c.desc}</p>
+          <Link key={c.href} href={c.href} className="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-md transition">
+            <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-slate-50">{c.title}</h3>
+            <p className="text-slate-600 dark:text-slate-400 text-sm">{c.desc}</p>
           </Link>
         ))}
       </div>
