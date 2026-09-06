@@ -1,11 +1,17 @@
 import OpenAI from "openai";
 
-export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIClient() {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("OPENAI_API_KEY environment variable is not set");
+  }
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 // Analyze resume text and return structured feedback.
 export async function analyzeResume(resumeText: string) {
+  const openai = getOpenAIClient();
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     response_format: { type: "json_object" },
@@ -32,6 +38,7 @@ export async function analyzeResume(resumeText: string) {
 
 // Generate interview questions tailored to a role + resume context.
 export async function generateInterviewQuestions(role: string, resumeText?: string) {
+  const openai = getOpenAIClient();
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     response_format: { type: "json_object" },
@@ -57,6 +64,7 @@ export async function generateInterviewQuestions(role: string, resumeText?: stri
 
 // Streaming-free simple chat completion for the chat interface.
 export async function chatReply(history: { role: "user" | "assistant"; content: string }[]) {
+  const openai = getOpenAIClient();
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
