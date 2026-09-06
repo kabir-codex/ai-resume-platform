@@ -7,13 +7,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
     "bcryptjs": "^2.4.3",
+    "jspdf": "^2.5.1",
     "next": "14.2.13",
     "next-auth": "^4.24.7",
     "openai": "^4.63.0",
@@ -24,15 +31,29 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
     "@types/bcryptjs": "^2.4.6",
+    "@types/jest": "^29.5.12",
+    "@types/jspdf": "^2.0.0",
     "@types/node": "^20.16.5",
+    "@types/pdf-parse": "^1.1.4",
     "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.69.0",
+    "@typescript-eslint/parser": "^8.69.0",
     "autoprefixer": "^10.4.20",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.47",
+    "prettier": "^3.2.5",
     "prisma": "^5.20.0",
     "tailwindcss": "^3.4.10",
+    "ts-jest": "^29.4.12",
+    "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }
 }
-
-
