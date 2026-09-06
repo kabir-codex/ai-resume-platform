@@ -4,9 +4,9 @@ export default function Home() {
   return (
     <div className="text-center py-20">
       <h1 className="text-5xl font-extrabold tracking-tight mb-6">
-        Land your next job with <span className="text-brand-600">AI-powered</span> resume feedback
+        Land your next job with <span className="text-brand-600 dark:text-brand-400">AI-powered</span> resume feedback
       </h1>
-      <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
+      <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10">
         Upload your CV, get instant AI analysis, generate tailored interview questions,
         and chat with a career coach — all in one platform.
       </p>
@@ -14,7 +14,7 @@ export default function Home() {
         <Link href="/register" className="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700">
           Start free
         </Link>
-        <Link href="/pricing" className="border border-slate-300 px-6 py-3 rounded-lg font-semibold hover:bg-slate-100">
+        <Link href="/pricing" className="border border-slate-300 dark:border-slate-600 px-6 py-3 rounded-lg font-semibold hover:bg-slate-100 dark:hover:bg-slate-800">
           View pricing
         </Link>
       </div>
@@ -25,9 +25,9 @@ export default function Home() {
           { title: "Interview Question Generator", desc: "Practice with role-specific behavioral and technical questions." },
           { title: "Career Coach Chat", desc: "Ask follow-up questions and get personalized guidance anytime." },
         ].map((f) => (
-          <div key={f.title} className="bg-white p-6 rounded-xl border">
-            <h3 className="font-bold text-lg mb-2">{f.title}</h3>
-            <p className="text-slate-600 text-sm">{f.desc}</p>
+          <div key={f.title} className="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-slate-50">{f.title}</h3>
+            <p className="text-slate-600 dark:text-slate-400 text-sm">{f.desc}</p>
           </div>
         ))}
       </div>

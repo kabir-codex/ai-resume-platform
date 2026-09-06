@@ -20,13 +20,13 @@ export default function PricingPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-10">Simple, transparent pricing</h1>
+      <h1 className="text-3xl font-bold text-center mb-10 text-slate-900 dark:text-slate-50">Simple, transparent pricing</h1>
       <div className="grid md:grid-cols-2 gap-6">
         {plans.map((p) => (
-          <div key={p.name} className="bg-white border rounded-xl p-6">
-            <h3 className="text-xl font-bold">{p.name}</h3>
-            <p className="text-3xl font-extrabold my-4">{p.price}</p>
-            <ul className="space-y-2 mb-6 text-sm text-slate-600">
+          <div key={p.name} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50">{p.name}</h3>
+            <p className="text-3xl font-extrabold my-4 text-slate-900 dark:text-slate-50">{p.price}</p>
+            <ul className="space-y-2 mb-6 text-sm text-slate-600 dark:text-slate-400">
               {p.features.map((f) => <li key={f}>✓ {f}</li>)}
             </ul>
             {p.name === "Pro" ? (
@@ -34,7 +34,7 @@ export default function PricingPage() {
                 Upgrade to Pro
               </button>
             ) : (
-              <button disabled className="w-full border py-2 rounded-lg font-semibold text-slate-400">
+              <button disabled className="w-full border border-slate-300 dark:border-slate-600 py-2 rounded-lg font-semibold text-slate-400">
                 Current default
               </button>
             )}
